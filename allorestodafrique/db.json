@@ -1,0 +1,14 @@
+{
+  "users": [
+    {"id": 1, "name": "Ahmadou"},
+    {"id": 2, "name": "Linda"},
+    {"id": 3, "name": "Lucien"}
+
+  ],
+
+  "plats" : [
+        {"id": 1, "title": "plat1", "image": "https://dummyimage.com/200x200/edbe68/fff&text=imagefood"},
+        {"id": 2, "title": "plat2", "image": "https://dummyimage.com/200x200/edbe68/fff&text=imagefood"},
+        {"id": 3, "title": "plat3", "image": "https://dummyimage.com/200x200/edbe68/fff&text=imagefood"}
+  ]
+}

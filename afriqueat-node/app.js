@@ -1,8 +1,12 @@
+const express = require('express')
+const cors = require('cors')
 const usersContoller = require('./controller/users')
 const foodContoller = require('./controller/food')
 
+const app = express()
 
-const app = require('express')()
+app.use(cors())
+app.use(express.json())
 
 app.use(usersContoller)
 app.use(foodContoller)

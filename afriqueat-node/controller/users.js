@@ -2,6 +2,7 @@ const users = require('../model/users')
 const app = require('express')()
 
 app.get('/user', (req, res)=>{
+
     users.All()
 
         .then( (resolution)=> {
@@ -17,23 +18,24 @@ app.get('/user/:id', (req, res)=>{
         userId: id
     })
 
-.then( (resolution)=> {
-            res.send('un utilisateur à été sélectionné')
-        }).catch((err)=> res.send('Une erreur a été commise'))
+.then( (result)=> {
+            res.json('un utilisateur à été sélectionné')
+        }).catch((err)=> res.json('Une erreur a été commise'))
 })
 
 app.post('/user', (req, res)=>{
+    const { firstname, lastname, email, password } = req.body;
+
     users.add({
-        firstName: "Maxime",
-        lastName: "Balme",
-        email: "maxime@balme.com",
-        password: "maxime",
+        firstName: firstname,
+        lastName: lastname,
+        email: email,
+        password: password,
     })
 
-        console.log("ok")
-    .then( (resolution)=> {
-        res.send('Un utilisateur a été ajouté')
-    }).catch((err)=> res.send('Une erreur a été commise'))
+    .then( (result)=> {
+        res.json('Un utilisateur a été ajouté')
+    }).catch((err)=> res.json('Une erreur a été commise'))
 })
 
 

@@ -2,7 +2,7 @@
   <nav class="navbar animated fadeIn">
     <ul class="menu">
       <li><router-link to="/">Accueil</router-link></li>
-      <li><router-link to="/products">Boutique</router-link></li>
+      <li><router-link to="/Products">Boutique</router-link></li>
     </ul>
     <router-link to="/"><img id="img-logo" src="../assets/AEatnoir.png" alt="logo barre de navigation"></router-link>
     <ul class="log-reg">

@@ -1,121 +1,34 @@
 <template>
     <section class="products-container">
 
-      <router-link class="link-to" to="/">
+      <router-link v-for="plat of food" :key="plat.foodId" class="link-to" :to="{path: 'Products/' + plat.foodId}" >
         <div class="food-box">
          <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
-          <span>Product name</span>
+          <span>{{plat.foodName}}</span>
         </div>
       </router-link>
-
-      <router-link class="link-to" to="/">
-        <div class="food-box">
-          <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
-          <span>Product name</span>
-        </div>
-      </router-link>
-
-      <router-link class="link-to" to="/">
-      <div class="food-box">
-        <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
-        <span>Product name</span>
-      </div>
-    </router-link>
-
-      <router-link class="link-to" to="/">
-        <div class="food-box">
-          <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
-          <span>Product name</span>
-        </div>
-      </router-link>
-
-      <router-link class="link-to" to="/">
-        <div class="food-box">
-          <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
-          <span>Product name</span>
-        </div>
-      </router-link>
-
-      <router-link class="link-to" to="/">
-        <div class="food-box">
-          <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
-          <span>Product name</span>
-        </div>
-      </router-link>
-
-      <router-link class="link-to" to="/">
-        <div class="food-box">
-          <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
-          <span>Product name</span>
-        </div>
-      </router-link>
-
-      <router-link class="link-to" to="/">
-        <div class="food-box">
-          <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
-          <span>Product name</span>
-        </div>
-      </router-link>
-
-      <router-link class="link-to" to="/">
-        <div class="food-box">
-          <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
-          <span>Product name</span>
-        </div>
-      </router-link>
-
-      <router-link class="link-to" to="/">
-        <div class="food-box">
-          <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
-          <span>Product name</span>
-        </div>
-      </router-link>
-
-      <router-link class="link-to" to="/">
-        <div class="food-box">
-          <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
-          <span>Product name</span>
-        </div>
-      </router-link>
-
-      <router-link class="link-to" to="/">
-        <div class="food-box">
-          <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
-          <span>Product name</span>
-        </div>
-      </router-link>
-
-      <router-link class="link-to" to="/">
-        <div class="food-box">
-          <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
-          <span>Product name</span>
-        </div>
-      </router-link>
-
-      <router-link class="link-to" to="/">
-        <div class="food-box">
-          <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
-          <span>Product name</span>
-        </div>
-      </router-link>
-
-      <router-link class="link-to" to="/">
-        <div class="food-box">
-          <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
-          <span>Product name</span>
-        </div>
-      </router-link>
-
     </section>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'products',
   data () {
     return {
-      msg1: 'This is products'
+      food:[]
     }
+  },
+  created() {
+     axios.get(`http://localhost:8888/plats`)
+    .then(response => {
+      // JSON responses are automatically parsed.
+      this.food = response.data
+    })
+    .catch(e => {
+      this.errors.push(e)
+    })
   }
 }
 </script>

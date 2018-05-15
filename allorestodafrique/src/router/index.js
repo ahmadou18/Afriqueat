@@ -7,7 +7,8 @@ import Logout from '@/components/Logout'
 import Products from '@/components/Products'
 import ProductsDetails from '@/components/ProductsDetails'
 import Cart from '@/components/Cart'
-
+import Dashboard from '@/components/Dashboard'
+import DashboardAdd from '@/components/DashboardAdd'
 Vue.use(Router)
 
 export default new Router({
@@ -46,6 +47,16 @@ export default new Router({
       path: '/Cart',
       name: 'Cart',
       component: Cart
+    },
+    {
+      path: '/Dashboard',
+      name: 'Dashboard',
+      component: Dashboard
+    },
+    {
+      path: '/Dashboard/Add',
+      name: 'DashboardAdd',
+      component: DashboardAdd
     }
   ]
 })

@@ -6,52 +6,76 @@
     </picture>
     <div class="form-container">
       <img class="logo-with-text" src="../assets/AfriquEat.png" alt="logo afriqueat coloré">
-
-      <form action="">
+    <p>{{Response}}</p>
+      <section class="formulaire">
 
         <div class="name">
           <label for="name">Nom</label>
-          <input type="text" name="name" id="name">
+          <input v-model="users.lastname" type="text" name="name" id="name">
         </div>
 
         <div class="prenom">
           <label for="prenom">Prénom</label>
-          <input type="text" name="prenom" id="prenom">
+          <input v-model="users.firstname" type="text" name="prenom" id="prenom">
         </div>
 
         <div class="email">
-          <label for="email">E-mail</label>
-          <input type="email" name="email" id="email">
+          <label  for="email">E-mail</label>
+          <input v-model="users.email" type="email" name="email" id="email">
         </div>
 
        <div class="password">
          <label for="password">Mot de passe</label>
-         <input type="password" name="password" id="password">
+         <input v-model="users.password" type="password" name="password" id="password">
        </div>
 
-        <div class="confirm-password">
+       <!-- <div class="confirm-password">
           <label for="confirmPassword">Confirmez votre mot de passe</label>
           <input type="password" name="confirmPassword" id="confirmPassword">
-        </div>
-
-        <input type="submit" value="Envoyer" class="register-submit">
-      </form>
+        </div> -->
+        <input type="submit" value="Envoyer" class="register-submit" @click="register()">
+      </section>
     </div>
   </section>
 </template>
 
 <script>
-import Header from './Header'
+import axios from 'axios'
 
 export default {
   name: 'register',
   data () {
     return {
-      msg4: 'REGISTER'
+      users: { lastname: '', firstname: '', email: '', password: '' },
+      Response: ''
     }
   },
-  components: {
-    'Header': Header
+
+  methods: {
+    register () {
+      const newUsers = {
+        lastname: this.users.lastname,
+        firstname: this.users.firstname,
+        email: this.users.email,
+        password: this.users.password
+      }
+      axios.post('http://localhost:8888/register', newUsers)
+        .then((res) => {
+          console.log('un utilisateur a été ajouté')
+          if (res.status === 200) {
+            this.Response = 'Votre compte a bien été créée, veuillez vous connecter'
+          }
+        })
+        .catch((error) => {
+          // return response.status(403).json({ error: "L'utisateur n'a pas pu être crée" });
+          /* eslint-disable no-console */
+          console.log('Problème de creation utilisateur', error)
+          /* eslint-disable no-console */
+          if (error.status !== 200) {
+            this.Response = 'une erreur a été commise'
+          }
+        })
+    }
   }
 }
 </script>
@@ -64,7 +88,7 @@ export default {
     display: flex;
   }
 
-  .form-container form div {
+  .form-container section div {
     display: flex;
     flex-direction: column;
     justify-content: space-around;

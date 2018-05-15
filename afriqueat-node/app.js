@@ -1,11 +1,29 @@
-const usersContoller = require('./controller/users')
-const foodContoller = require('./controller/food')
+const express = require('express')
+const cors = require('cors')
+
+const usersController = require('./controller/users')
+const foodController = require('./controller/food')
+const keys = require('./config/keys')
+// const OAuthController = require('./controller/OAuth')
+// const passportSetup = require('./config/passport-config')
 
 
-const app = require('express')()
+const expressValidator = ('express-validator')
+const session = require ('express-session')
 
-app.use(usersContoller)
-app.use(foodContoller)
+const app = express()
+
+app.use(cors())
+app.use(express.json())
+app.use(session({
+    secret: keys.expressSession.secret,
+    resave: false,
+    saveUninitialized: true,
+}))
+
+// app.use(OAuthController)
+app.use(usersController)
+app.use(foodController)
 
 
 

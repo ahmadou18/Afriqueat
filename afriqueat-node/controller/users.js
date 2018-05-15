@@ -11,19 +11,20 @@ app.get('/user', (req, res)=>{
 })
 
 
-app.get('/user/:id', (req, res)=>{
-    const { id } = req.params;
+// app.get('/user/:id', (req, res)=>{
+//     const { id } = req.params;
 
-    users.getby({
-        userId: id
-    })
+//     users.getby({
+//         userId: id
+//     })
 
-.then( (result)=> {
-            res.json('un utilisateur à été sélectionné')
-        }).catch((err)=> res.json('Une erreur a été commise'))
-})
+// .then( (result)=> {
+//             res.json('un utilisateur à été sélectionné')
+//         }).catch((err)=> res.json('Une erreur a été commise'))
+// })
 
-app.post('/user', (req, res)=>{
+app.post('/register', (req, res)=>{
+
     const { firstname, lastname, email, password } = req.body;
 
     users.add({
@@ -33,11 +34,35 @@ app.post('/user', (req, res)=>{
         password: password,
     })
 
-    .then( (result)=> {
-        res.json('Un utilisateur a été ajouté')
+    .then((result)=> {
+        if(result.length > 0) {
+            res.json('Un utilisateur a été ajouté')
+            console.log(result)
+		} else {
+			res.json('PAS CONNECTE')
+        }
     }).catch((err)=> res.json('Une erreur a été commise'))
+
 })
 
+app.post('/login', (req,res)=> {
+    const { firstName, email, password } = req.body;
 
+    users.getby({
+        email: email,
+        password: password
+    })
+
+    .then( (result)=> {
+        if(result.length > 0) {
+            res.json('connecté')
+            console.log(result)
+		} else {
+			res.json('PAS CONNECTE')
+
+        }
+    })
+    .catch((err)=> res.json('Une erreur a été commise'))
+})
 
 module.exports = app

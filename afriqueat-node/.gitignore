@@ -56,3 +56,7 @@ typings/
 
 # dotenv environment variables file
 .env
+
+#token api OAuth
+
+config/keys.js

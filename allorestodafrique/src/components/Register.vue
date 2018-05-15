@@ -33,7 +33,6 @@
           <label for="confirmPassword">Confirmez votre mot de passe</label>
           <input type="password" name="confirmPassword" id="confirmPassword">
         </div> -->
-
         <input type="submit" value="Envoyer" class="register-submit" @click="register()">
       </section>
     </div>
@@ -60,11 +59,11 @@ export default {
         email: this.users.email,
         password: this.users.password
       }
-      axios.post('http://localhost:8888/user', newUsers)
+      axios.post('http://localhost:8888/register', newUsers)
         .then((res) => {
           console.log('un utilisateur a été ajouté')
           if (res.status === 200) {
-            this.Response = 'Votre compte a bien été créée'
+            this.Response = 'Votre compte a bien été créée, veuillez vous connecter'
           }
         })
         .catch((error) => {
@@ -89,7 +88,7 @@ export default {
     display: flex;
   }
 
-  .form-container form div {
+  .form-container section div {
     display: flex;
     flex-direction: column;
     justify-content: space-around;

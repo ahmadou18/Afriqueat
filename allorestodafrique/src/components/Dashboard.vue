@@ -12,42 +12,44 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
-  name: 'Dashboard',
-  data () {
+  name: "Dashboard",
+  data() {
     return {
-      food:[]
-    }
+      food: []
+    };
   },
   created() {
-     axios.get(`http://localhost:8888/plats`)
-    .then(response => {
-      // JSON responses are automatically parsed.
-      this.food = response.data
-    })
-    .catch(e => {
-      this.errors.push(e)
-    })
+    axios
+      .get(`http://localhost:8888/plats`)
+      .then(response => {
+        // JSON responses are automatically parsed.
+        if (response.data.error) throw response.data.error;
+        this.food = response.data.success;
+      })
+      .catch(e => {
+        this.errors.push(e);
+      })
+      .then(res => console.log(this.food));
   }
-}
-
+};
 </script>
 
 <style scoped>
-  #dashboard {
-    width: 100%;
-    height: 100%;
-    padding-top: 50px;
-  }
+#dashboard {
+  width: 100%;
+  height: 100%;
+  padding-top: 50px;
+}
 
-  #dashboard ul {
-    list-style: none;
-    width: 50%;
-  }
-  #dashboard ul li {
-        display: flex;
-        justify-content: space-around;
-  }
+#dashboard ul {
+  list-style: none;
+  width: 50%;
+}
+#dashboard ul li {
+  display: flex;
+  justify-content: space-around;
+}
 </style>

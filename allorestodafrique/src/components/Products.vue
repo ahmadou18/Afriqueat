@@ -1,7 +1,7 @@
 <template>
     <section class="products-container">
 
-      <router-link v-for="plat of food" :key="plat.foodId" class="link-to" :to="{path: 'Products/' + plat.foodId}" >
+      <router-link v-for="plat of food" :key="plat.foodId" class="link-to" :to="{ name: 'ProductsDetails', params: { id: plat.foodId }}" >
         <div class="food-box">
          <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
           <span>{{plat.foodName}}</span>
@@ -24,11 +24,13 @@ export default {
      axios.get(`http://localhost:8888/plats`)
     .then(response => {
       // JSON responses are automatically parsed.
-      this.food = response.data
+      if(response.data.error) throw response.data.error
+      this.food = response.data.success
     })
     .catch(e => {
       this.errors.push(e)
     })
+    .then(res => console.log(this.food))
   }
 }
 </script>

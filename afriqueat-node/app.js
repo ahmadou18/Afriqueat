@@ -12,6 +12,7 @@ const expressValidator = ('express-validator')
 const session = require ('express-session')
 
 const app = express()
+app.use('/uploads', express.static('uploads'))
 
 app.use(cors())
 app.use(express.json())
@@ -20,7 +21,6 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
 }))
-
 // app.use(OAuthController)
 app.use(usersController)
 app.use(foodController)

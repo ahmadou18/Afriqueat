@@ -11,11 +11,11 @@ function All() {
 
 function getby(data) {
     // {userId: 3, isAdmin: true)
-    return food().where(data)
+    return food().first().where(data)
 }
 
 function add(data) {
-    return food().insert(data)
+    return food().insert(data).returning('foodId')
 }
 
 function updateData(data) {

@@ -1,6 +1,6 @@
 const knex = require('./knex')
 
-function user(){
+function user() {
     return knex("users")
 }
 

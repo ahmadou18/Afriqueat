@@ -1,44 +1,87 @@
 <template>
-    <section class="products-container">
+    <section class="products-container" ref="container">
 
       <router-link v-for="plat of food" :key="plat.foodId" class="link-to" :to="{ name: 'ProductsDetails', params: { id: plat.foodId }}" >
-        <div class="food-box">
+        <div :style="{ 'background-image': 'url(http://localhost:8888/' + plat.foodImage + ')' }" class="food-box">
          <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
-          <span>{{plat.foodName}}</span>
+          <div class="dishes-name-price"><span>{{plat.foodName}}</span><span>{{plat.foodPrice}}€</span></div>
         </div>
       </router-link>
     </section>
 </template>
 
 <script>
-import axios from "axios";
+import anime from 'animejs'
+import axios from 'axios'
 
 export default {
-  name: "products",
+  name: 'products',
   data() {
     return {
-      food: []
-    };
+      food: [],
+      errors: []
+    }
   },
+
+  methods: {
+    fade: function() {
+      anime({
+        targets: this.$refs.container,
+        translateY: {
+          value: ['-100%', 0],
+          duration: 800,
+          easing: [0.645, 0.045, 0.355, 1]
+        }
+        // opacity: {
+        //   value: [0, 1],
+        //   duration: 800,
+        //   delay: 100,
+        //   easing: 'linear'
+        // }
+      })
+    }
+  },
+
+  mounted() {
+    this.fade()
+  },
+
   created() {
     axios
       .get(`http://localhost:8888/plats`)
       .then(response => {
         // JSON responses are automatically parsed.
-        if (response.data.error) throw response.data.error;
-        this.food = response.data.success;
+        if (response.data.error) throw response.data.error
+        this.food = response.data.success
       })
       .catch(e => {
-        this.errors.push(e);
+        this.errors.push(e)
       })
-      .then(res => console.log(this.food));
+      .then(res => console.log(this.food))
+  },
+  beforeDestroy() {
+    anime({
+      targets: this.$refs.container,
+      translateY: {
+        value: [0, '-100%'],
+        duration: 800,
+        easing: [0.645, 0.045, 0.355, 1]
+      }
+      // opacity: {
+      //   value: [1, 0],
+      //   duration: 800,
+      //   delay: 100,
+      //   easing: "linear"
+      // }
+    })
   }
-};
+}
 </script>
 
 <style scoped>
 .products-container {
   width: 100%;
+  height: 100%;
   box-sizing: border-box;
   margin-top: 0;
   padding: 80px 10px 0 10px;
@@ -49,10 +92,19 @@ export default {
 }
 
 .food-box {
-  height: 250px;
-  background-image: url("https://dummyimage.com/200x200/edbe68");
+  height: 330px;
+  background-image: url('https://dummyimage.com/200x200/edbe68');
   background-size: cover;
+  background-position: center;
   overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.food-box:hover {
+  -webkit-box-shadow: 5px 5px 13px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 5px 5px 13px -7px rgba(0, 0, 0, 0.75);
+  box-shadow: 5px 5px 13px -7px rgba(0, 0, 0, 0.75);
+  filter: blur(0.1px);
 }
 
 .food-box span {
@@ -63,7 +115,7 @@ export default {
 }
 
 .food-box span:after {
-  content: "";
+  content: '';
   position: absolute;
   width: 0;
   height: 100%;
@@ -74,16 +126,36 @@ export default {
 }
 
 .link-to {
-  width: 15%;
-  height: 300px;
-  margin-right: 4px;
+  width: 25%;
+  height: 350px;
+  margin-right: 2%;
   outline: none;
-  margin-bottom: 4px;
+  margin-bottom: 1px;
+}
+
+.cart {
+  z-index: 9999;
+}
+
+.dishes-name-price {
+  background-color: white;
+  height: 20%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 235px;
+}
+
+.dishes-name-price span {
+  color: black;
+  height: 20%;
+  font-weight: 300;
+  font-size: 13px;
 }
 
 @media screen and (max-width: 1400px) {
   .link-to {
-    width: 20%;
+    width: 25%;
   }
 }
 

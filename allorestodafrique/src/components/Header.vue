@@ -8,6 +8,7 @@
     <ul class="log-reg">
       <li><router-link to="/register">Inscription</router-link></li>
       <li><router-link to="/login">Connexion</router-link></li>
+      <li></li>
     </ul>
   </nav>
 </template>
@@ -20,9 +21,9 @@ export default {
 
 <style scoped>
   #img-logo {
-    width: 115px;
-    height: 35px;
-    margin-top: 6px;
+      width: 115px;
+      height: 35px;
+      margin-top: 6px;
   }
 
   .navbar {

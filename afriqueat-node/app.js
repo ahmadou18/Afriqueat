@@ -9,7 +9,7 @@ const keys = require('./config/keys')
 
 
 const expressValidator = ('express-validator')
-const session = require ('express-session')
+const session = require('express-session')
 
 const app = express()
 app.use('/uploads', express.static('uploads'))
@@ -28,6 +28,6 @@ app.use(foodController)
 
 
 app.listen(8888, function (err) {
-    if(err) return console.log(err)
+    if (err) return console.log(err)
     console.log('connected on port 8888')
 });

@@ -1,10 +1,10 @@
 <template>
   <section class="login">
 
-    <picture class="login-img animated fadeInLeft">
+    <picture class="login-img" ref="blockLeft">
       <img src="../assets/paella.jpg" alt="Image Page Connexion">
     </picture>
-    <div class="login-container animated fadeIn">
+    <div class="login-container" ref="blockRight">
 
       <img class="logo-with-text" src="../assets/AfriquEat.png" alt="logo afriqueat coloré">
 
@@ -25,35 +25,104 @@
 </template>
 
 <script>
-import Header from './Header'
+import anime from 'animejs'
 
 export default {
   name: 'login',
-  data () {
-    return {
-      msg5: 'LOGIN'
+  methods: {
+    animationLeft: function() {
+      anime({
+        targets: this.$refs.blockLeft,
+        translateX: {
+          value: ['-100%', 0],
+          duration: 800,
+          easing: [0.645, 0.045, 0.355, 1]
+        }
+        // opacity: {
+        //   value: [0, 1],
+        //   duration: 800,
+        //   delay: 100,
+        //   easing: "linear"
+        // }
+      })
+    },
+    animationRight: function() {
+      anime({
+        targets: this.$refs.blockRight,
+        translateX: {
+          value: ['200%', 0],
+          duration: 800,
+          easing: [0.645, 0.045, 0.355, 1]
+        }
+        // opacity: {
+        //   value: [0, 1],
+        //   duration: 800,
+        //   delay: 100,
+        //   easing: "linear"
+        // }
+      })
     }
   },
-  components: {
-    'Header': Header
+
+  mounted() {
+    this.animationLeft()
+    this.animationRight()
+  },
+
+  beforeDestroy() {
+    anime({
+      targets: this.$refs.blockLeft,
+      translateX: {
+        value: [0, '-100%'],
+        duration: 800,
+        delay: function(el, i) {
+          return i * 100
+        },
+        easing: [0.645, 0.045, 0.355, 1]
+      }
+      // opacity: {
+      //   value: [1, 0],
+      //   duration: 500,
+      //   delay: 100,
+      //   easing: "linear"
+      // }
+    }),
+      anime({
+        targets: this.$refs.blockRight,
+        translateX: {
+          value: [0, '200%'],
+          duration: 800,
+          delay: function(el, i) {
+            return i * 100
+          },
+          easing: [0.645, 0.045, 0.355, 1]
+        }
+        // opacity: {
+        //   value: [1, 0],
+        //   duration: 500,
+        //   delay: 100,
+        //   easing: "linear"
+        // }
+      })
+    console.log(this.$refs.blockRight)
+    console.log(this.$refs.blockLeft)
   }
 }
 </script>
 
 <style scoped>
-
 .login {
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 .login-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    margin: auto;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: auto;
 }
 
 .login-container form div {
@@ -63,7 +132,7 @@ export default {
   align-items: flex-start;
 }
 
-.login  {
+.login {
   width: 100%;
   height: 100%;
   display: flex;
@@ -89,7 +158,8 @@ export default {
   transform: translateX(-29%) skewX(-12deg);
   display: block;
 }
-.email #email, .password #password {
+.email #email,
+.password #password {
   width: 300px;
   height: 30px;
   border-radius: 0;
@@ -101,10 +171,11 @@ export default {
   align-items: flex-start;
 }
 
-.email label, .password label {
-    margin-bottom: 20px;
-    font-size: 14px;
-  }
+.email label,
+.password label {
+  margin-bottom: 20px;
+  font-size: 14px;
+}
 
 .login-form {
   display: flex;
@@ -112,31 +183,31 @@ export default {
   flex-direction: column;
 }
 
-  .login-submit {
-    cursor: pointer;
-    width: 200px;
-    margin: 20px auto 0 auto;
-    font-weight: bold;
-    background-color: transparent;
-    border: none;
-    position: relative;
-  }
+.login-submit {
+  cursor: pointer;
+  width: 200px;
+  margin: 20px auto 0 auto;
+  font-weight: bold;
+  background-color: transparent;
+  border: none;
+  position: relative;
+}
 
-  .login-submit::after {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 5px;
-    top: 45%;
-    left: 0;
-    transition: all 0.3s ease;
-    background-color: rgb(165, 210, 150);
-    z-index: -1;
-  }
+.login-submit::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 5px;
+  top: 45%;
+  left: 0;
+  transition: all 0.3s ease;
+  background-color: rgb(165, 210, 150);
+  z-index: -1;
+}
 
-  .login-submit:hover::after {
-    width: 100%;
-  }
+.login-submit:hover::after {
+  width: 100%;
+}
 
 /*MEDIA*/
 
@@ -153,9 +224,12 @@ export default {
   .login-img img {
     width: 100vw;
     height: 50vh;
-    transform: skewX(0);
-
+    transform: skewX(0) translate(-27%);
+    width: 137vw;
   }
 
+  .logo-with-text {
+    display: none;
+  }
 }
 </style>

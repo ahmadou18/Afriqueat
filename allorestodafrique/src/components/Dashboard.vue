@@ -1,7 +1,7 @@
 <template>
   <section id="dashboard">
+    <router-link tag="button" to="/Dashboard/Add">+ Ajouter un plat</router-link>
 <ul v-if="food && food.length">
-<router-link tag="button" to="/Dashboard/Add">+ Ajouter un plat</router-link>
     <li v-for="plat of food" :key="plat.foodId">
       <p>Nom: <strong>{{plat.foodName}}</strong></p>
       <p>Description: {{plat.foodDescription}}</p>
@@ -12,29 +12,29 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
 
 export default {
-  name: "Dashboard",
+  name: 'Dashboard',
   data() {
     return {
       food: []
-    };
+    }
   },
   created() {
     axios
       .get(`http://localhost:8888/plats`)
       .then(response => {
         // JSON responses are automatically parsed.
-        if (response.data.error) throw response.data.error;
-        this.food = response.data.success;
+        if (response.data.error) throw response.data.error
+        this.food = response.data.success
       })
       .catch(e => {
-        this.errors.push(e);
+        this.errors.push(e)
       })
-      .then(res => console.log(this.food));
+      .then(res => console.log(this.food))
   }
-};
+}
 </script>
 
 <style scoped>

@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <Header/>
-    <transition class="router-anim" 
-    enter-active-class="animated fadeIn" 
-    leave-active-class="animated fadeOut" 
+    <transition  :duration="{ enter: 0, leave: 700 }" 
     mode="out-in">
     <router-view/>
     </transition>
@@ -14,6 +12,11 @@
 import Header from "./components/Header";
 export default {
   name: "App",
+  data() {
+    return {
+      leave: false
+    };
+  },
   components: {
     Header: Header
   }
@@ -21,11 +24,6 @@ export default {
 </script>
 
 <style>
-@import "https://cdn.jsdelivr.net/npm/animate.css@3.5.2";
-.animated {
-  -webkit-animation-duration: 0.7s;
-  animation-duration: 0.7s;
-}
 #app {
   position: relative;
 }

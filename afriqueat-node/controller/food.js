@@ -7,7 +7,8 @@ const multer = require('multer')
 
 const storage = multer.diskStorage({
     destination: 'uploads/',
-    filename : (req, file, cb) => {
+    filename: (req, file, cb) => {
+        console.log(file)
         cb(null, file.fieldname + '-' + Date.now() + file.originalname)
     }
 });
@@ -15,8 +16,10 @@ const storage = multer.diskStorage({
 //init upload
 
 const upload = multer({
-    storage : storage,
-    limits: {fileSize: 10000000},
+    storage: storage,
+    limits: {
+        fileSize: 10000000
+    },
     fileFilter: (req, file, cb) => {
         checkFileType(file, cb)
     }
@@ -25,40 +28,44 @@ const upload = multer({
 
 function checkFileType(file, cb) {
     //ext
-     const filetypes = /jpeg|jpg|png|gif|svg/;
- 
-     //check extension
- 
-     const extname = filetypes.test((file.originalname).toLowerCase());
- 
-     const mimetype = filetypes.test(file.mimetype);
- 
-     if ( mimetype && extname ) {
-         return cb(null, true)
-     }else {
- 
- 
-     }
- }
+    const filetypes = /jpeg|jpg|png|gif|svg/;
+
+    //check extension
+
+    const extname = filetypes.test((file.originalname).toLowerCase());
+
+    const mimetype = filetypes.test(file.mimetype);
+
+    if (mimetype && extname) {
+        return cb(null, true)
+    } else {
+
+        console.log("multer nothing ")
+    }
+}
 
 app.get('/plats', (req, res) => {
+    console.log("C'est moi !!")
     food.All()
-
-        .then(( resolution) => {
-            res.send({success:resolution})
-        }).catch((err) => res.send({error: 'Une erreur a été commise'}))
+        .then((resolution) => {
+            console.log(resolution)
+            res.send({
+                success: resolution
+            })
+        }).catch((err) => res.send({
+            error: 'Une erreur a été commise'
+        }))
 })
 
 
-app.post('/plats',upload.single("foodImage"), (req, res) => {
-    // console.log(req.file)
+app.post('/plats', (req, res) => {
     const {
         foodName,
         foodDescription,
         foodPrice,
+        foodImage
     } = req.body;
 
-    const foodImage = req.file.path
 
 
     food.add({
@@ -66,21 +73,48 @@ app.post('/plats',upload.single("foodImage"), (req, res) => {
         foodDescription,
         foodPrice,
         foodImage
-    }).then(( resolution) => {
-        res.send({success:resolution})
-    }).catch((err) => res.send({error: 'Une erreur a été commise'}))
+    }).then((resolution) => {
+        res.send({
+            success: resolution
+        })
+    }).catch((err) => {
+        console.log(err)
+        return res.send({
+            error: 'Une erreur a été commise'
+        })
+    })
 })
 
+app.post('/plats/image', upload.single("file"), (req, res) => {
+
+    const foodImage = req.file.path
+    console.log(foodImage)
+
+
+    res.send({
+        success: foodImage
+    })
+
+})
+
+
+
 app.get('/plats/:id', (req, res) => {
-    const {id} = req.params;
+    const {
+        id
+    } = req.params;
 
     food.getby({
             foodId: id
         })
 
-        .then(( resolution) => {
-            res.send({success:resolution})
-        }).catch((err) => res.send({error: 'Une erreur a été commise'}))
+        .then((resolution) => {
+            res.send({
+                success: resolution
+            })
+        }).catch((err) => res.send({
+            error: 'Une erreur a été commise'
+        }))
 })
 
 

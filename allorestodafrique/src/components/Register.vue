@@ -1,13 +1,13 @@
 <template>
   <section class="register">
 
-    <picture class="register-img animated fadeInLeft">
+    <picture class="register-img" ref="blockLeft">
       <img src="../assets/brochettes.jpg" alt="Image Page Inscription">
     </picture>
-    <div class="form-container">
+    <div class="form-container" ref="blockRight">
       <img class="logo-with-text" src="../assets/AfriquEat.png" alt="logo afriqueat coloré">
     <p>{{Response}}</p>
-      <section class="formulaire">
+      <section class="formulaire" >
 
         <div class="name">
           <label for="name">Nom</label>
@@ -40,46 +40,123 @@
 </template>
 
 <script>
-import axios from "axios";
+import anime from 'animejs'
+import axios from 'axios'
 
 export default {
-  name: "register",
+  name: 'register',
   data() {
     return {
-      users: { lastname: "", firstname: "", email: "", password: "" },
-      Response: ""
-    };
+      users: { lastname: '', firstname: '', email: '', password: '' },
+      Response: ''
+    }
   },
 
   methods: {
+    animationLeft: function() {
+      anime({
+        targets: this.$refs.blockLeft,
+        translateX: {
+          value: ['-100%', 0],
+          duration: 800,
+          easing: [0.645, 0.045, 0.355, 1]
+        }
+        // opacity: {
+        //   value: [0, 1],
+        //   duration: 800,
+        //   delay: 100,
+        //   easing: "linear"
+        // }
+      })
+    },
+    animationRight: function() {
+      anime({
+        targets: this.$refs.blockRight,
+        translateX: {
+          value: ['200%', 0],
+          duration: 800,
+          easing: [0.645, 0.045, 0.355, 1]
+        }
+        // opacity: {
+        //   value: [0, 1],
+        //   duration: 800,
+        //   delay: 100,
+        //   easing: "linear"
+        // }
+      })
+    },
     register() {
       const newUsers = {
         lastname: this.users.lastname,
         firstname: this.users.firstname,
         email: this.users.email,
         password: this.users.password
-      };
+      }
       axios
-        .post("http://localhost:8888/register", newUsers)
+        .post('http://localhost:8888/register', newUsers)
         .then(res => {
-          console.log("un utilisateur a été ajouté");
+          console.log('un utilisateur a été ajouté')
           if (res.status === 200) {
             this.Response =
-              "Votre compte a bien été créée, veuillez vous connecter";
+              'Votre compte a bien été créée, veuillez vous connecter'
           }
         })
         .catch(error => {
           // return response.status(403).json({ error: "L'utisateur n'a pas pu être crée" });
           /* eslint-disable no-console */
-          console.log("Problème de creation utilisateur", error);
+          console.log('Problème de creation utilisateur', error)
           /* eslint-disable no-console */
           if (error.status !== 200) {
-            this.Response = "une erreur a été commise";
+            this.Response = 'une erreur a été commise'
           }
-        });
+        })
     }
+  },
+
+  mounted() {
+    this.animationLeft()
+    this.animationRight()
+  },
+
+  beforeDestroy() {
+    anime({
+      targets: this.$refs.blockLeft,
+      translateX: {
+        value: [0, '-100%'],
+        duration: 800,
+        delay: function(el, i) {
+          return i * 100
+        },
+        easing: [0.645, 0.045, 0.355, 1]
+      }
+      // opacity: {
+      //   value: [1, 0],
+      //   duration: 500,
+      //   delay: 100,
+      //   easing: "linear"
+      // }
+    }),
+      anime({
+        targets: this.$refs.blockRight,
+        translateX: {
+          value: [0, '200%'],
+          duration: 800,
+          delay: function(el, i) {
+            return i * 100
+          },
+          easing: [0.645, 0.045, 0.355, 1]
+        }
+        // opacity: {
+        //   value: [1, 0],
+        //   duration: 500,
+        //   delay: 100,
+        //   easing: "linear"
+        // }
+      })
+    console.log(this.$refs.blockRight)
+    console.log(this.$refs.blockLeft)
   }
-};
+}
 </script>
 
 <style scoped>
@@ -87,6 +164,7 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
+  overflow: hidden;
 }
 
 .form-container section div {
@@ -163,7 +241,7 @@ export default {
 }
 
 .register-submit::after {
-  content: "";
+  content: '';
   position: absolute;
   width: 0;
   height: 5px;
@@ -183,6 +261,22 @@ export default {
 @media screen and (max-width: 960px) {
   .register {
     flex-direction: column;
+  }
+
+  .register-img {
+    width: 100%;
+    height: 50vh;
+  }
+
+  .register-img img {
+    width: 100vw;
+    height: 50vh;
+    transform: skewX(0) translate(-27%);
+    width: 137vw;
+  }
+
+  .logo-with-text {
+    display: none;
   }
 }
 </style>

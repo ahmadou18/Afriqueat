@@ -5,30 +5,36 @@
       <img src="../assets/paella.jpg" alt="Image Page Connexion">
     </picture>
     <div class="login-container" ref="blockRight">
-
       <img class="logo-with-text" src="../assets/AfriquEat.png" alt="logo afriqueat coloré">
+        {{ Response}}
+          <div class="login-form">
+          <div class="email">
+            <label for="email">E-mail</label>
+            <input  v-model.trim="users.email" type="email" name="email" id="email">
+          </div>
 
-      <form action="" class="login-form">
-      <div class="email">
-        <label for="email">E-mail</label>
-        <input type="email" name="email" id="email">
-      </div>
-
-      <div class="password">
-        <label for="password">Mot de passe</label>
-        <input type="password" name="password" id="password">
-      </div>
-      <button type="submit" class="login-submit"> Se Connecter</button>
-    </form>
-    </div>password
+          <div class="password">
+            <label for="password">Mot de passe</label>
+            <input v-model.trim="users.password" type="password" name="password" id="password">
+          </div>
+          <button type="submit" class="login-submit" @click="connexion()"> Se Connecter</button>
+        </div>
+    </div>
   </section>
 </template>
 
 <script>
 import anime from 'animejs'
+import axios from 'axios'
 
 export default {
   name: 'login',
+  data() {
+    return {
+      users: { firstname: '', email: '', password: '' },
+      Response: ''
+    }
+  },
   methods: {
     animationLeft: function() {
       anime({
@@ -61,6 +67,30 @@ export default {
         //   easing: "linear"
         // }
       })
+    },
+
+    connexion() {
+      const connect = {
+        email: this.users.email,
+        password: this.users.password
+      }
+      axios
+        .post('http://localhost:8888/login', connect, { credentials: true })
+
+        .then(res => {
+          if (res.status === 200) {
+            this.Response = 'Bienvenue'
+          }
+        })
+        .catch(error => {
+          // return response.status(403).json({ error: "L'utisateur n'a pas pu être crée" });
+          /* eslint-disable no-console */
+          console.log('Problème de creation utilisateur', error)
+          /* eslint-disable no-console */
+          if (error.status !== 200) {
+            this.Response = 'une erreur a été commise'
+          }
+        })
     }
   },
 

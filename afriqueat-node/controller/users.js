@@ -61,7 +61,9 @@ app.post('/login', (req, res) => {
             password: password
         })
         .then((result) => {
-            console.log(result)
+            console.log({
+                result
+            })
             if (result.length > 0) {
                 req.session.user = result[0]
                 console.log('connecté: ' + JSON.stringify(req.session.user))
@@ -73,6 +75,10 @@ app.post('/login', (req, res) => {
             }
         })
         .catch((err) => res.json('Une erreur a été commise'))
+})
+
+app.get('/usercurrent', (req, res) => {
+    res.json(req.session.user)
 })
 
 module.exports = app

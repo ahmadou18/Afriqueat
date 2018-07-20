@@ -48,7 +48,7 @@ export default {
 
   created() {
     axios
-      .get(`http://localhost:8888/plats`)
+      .get(`http://localhost:8888/plats`, { credentials: true })
       .then(response => {
         // JSON responses are automatically parsed.
         if (response.data.error) throw response.data.error
@@ -81,7 +81,6 @@ export default {
 <style scoped>
 .products-container {
   width: 100%;
-  height: 100%;
   box-sizing: border-box;
   margin-top: 0;
   padding: 80px 10px 0 10px;

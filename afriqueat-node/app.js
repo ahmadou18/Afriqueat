@@ -14,7 +14,11 @@ const session = require('express-session')
 const app = express()
 app.use('/uploads', express.static('uploads'))
 
-app.use(cors())
+app.use(cors({
+    origin: ['http://localhost:8081'],
+    methods: ['GET', 'POST'],
+    credentials: true
+}))
 app.use(express.json())
 app.use(session({
     secret: keys.expressSession.secret,

@@ -45,12 +45,13 @@ function checkFileType(file, cb) {
 }
 
 app.get('/plats', (req, res) => {
-    console.log("C'est moi !!")
+    console.log(req.session.user, "coucou")
     food.All()
         .then((resolution) => {
-            console.log(resolution)
+            // console.log(resolution)
             res.send({
-                success: resolution
+                success: resolution,
+                user: req.session.user
             })
         }).catch((err) => res.send({
             error: 'Une erreur a été commise'
@@ -88,7 +89,7 @@ app.post('/plats', (req, res) => {
 app.post('/plats/image', upload.single("file"), (req, res) => {
 
     const foodImage = req.file.path
-    console.log(foodImage)
+    // console.log(foodImage)
 
 
     res.send({

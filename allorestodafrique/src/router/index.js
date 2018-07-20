@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Register from '@/components/Register'
 import Login from '@/components/Login'
-import Logout from '@/components/Logout'
 import Products from '@/components/Products'
 import ProductsDetails from '@/components/ProductsDetails'
 import Cart from '@/components/Cart'
@@ -12,8 +11,8 @@ import DashboardAdd from '@/components/DashboardAdd'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
+  mode: 'history',
+  routes: [{
       path: '/',
       name: 'Home',
       component: Home
@@ -27,11 +26,6 @@ export default new Router({
       path: '/Login',
       name: 'Login',
       component: Login
-    },
-    {
-      path: '/Logout',
-      name: 'Logout',
-      component: Logout
     },
     {
       path: '/Products',

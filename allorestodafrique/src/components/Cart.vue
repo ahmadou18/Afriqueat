@@ -1,23 +1,37 @@
 <template>
   <section id="cart">
-    <div class="cart-item">
-      <img src="" alt=""> <div></div>
+    <div v-for="cartItem of food" :key="cartItem.foodId" class="cart-item">
+      <img :src=" 'http://localhost:8888/' + cartItem.foodImage" alt="">
+       <div class="cart-price"><p>Prix: {{cartItem.foodPrice}}€</p>  </div>
+       <div class="cart-name"><p>Nom: {{cartItem.foodName}}</p>  </div>
     </div>
     <button type="submit" class="dishes-submit"><span>COMMANDER</span></button>
   </section>
 </template>
 
 <script>
-import Header from './Header'
+import axios from 'axios'
 export default {
   name: 'cart',
   data() {
     return {
-      msg7: 'CART'
+      cart: []
     }
   },
-  components: {
-    Header: Header
+  created() {
+    axios
+      .get(`http://localhost:8888/command`, { credentials: true })
+      .then(response => {
+        // JSON responses are automatically parsed.
+        if (response.data.error) throw response.data.error
+        this.food = response.data.success
+
+        console.log('cart:', response.data.success)
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    // .then(res => console.log(this.food))
   }
 }
 </script>
@@ -26,7 +40,30 @@ export default {
 #cart {
   width: 100%;
   height: 100%;
-  padding-top: 50px;
+  padding: 100px;
+}
+
+.cart-item {
+  margin-bottom: 5px;
+  border: 1px solid;
+  display: flex;
+}
+
+.cart-price {
+  border-right: 1px solid;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.cart-name {
+  width: 80%;
+  text-align: center;
+}
+
+.cart-item img {
+  width: 100px;
+  height: auto;
+  border-right: 1px solid;
 }
 
 .dishes-submit {

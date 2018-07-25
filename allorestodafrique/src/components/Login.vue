@@ -26,6 +26,7 @@
 <script>
 import anime from 'animejs'
 import axios from 'axios'
+import Store from '../store'
 
 export default {
   name: 'login',
@@ -80,6 +81,7 @@ export default {
         .then(res => {
           if (res.status === 200) {
             this.Response = 'Bienvenue'
+            Store.state.isConnected = true
           }
         })
         .catch(error => {
@@ -97,6 +99,7 @@ export default {
   mounted() {
     this.animationLeft()
     this.animationRight()
+    console.log('connected:', Store.isConnected)
   },
 
   beforeDestroy() {
@@ -134,8 +137,8 @@ export default {
         //   easing: "linear"
         // }
       })
-    console.log(this.$refs.blockRight)
-    console.log(this.$refs.blockLeft)
+    // console.log(this.$refs.blockRight)
+    // console.log(this.$refs.blockLeft)
   }
 }
 </script>

@@ -1,7 +1,6 @@
-
-exports.up = function(knex, Promise) {
+exports.up = function (knex, Promise) {
     return knex.schema.createTable('cart', function (table) {
-        table.dateTime("datetimeCart")
+        table.timestamps(true, true);
         table.integer("id_user").unsigned().notNullable()
         table.foreign("id_user").references("users.userId").onUpdate("CASCADE").onDelete("CASCADE")
 
@@ -11,6 +10,6 @@ exports.up = function(knex, Promise) {
     })
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function (knex, Promise) {
     return knex.schema.dropTable('cart')
 };

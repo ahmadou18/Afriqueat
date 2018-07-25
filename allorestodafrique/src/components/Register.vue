@@ -8,10 +8,9 @@
       <img class="logo-with-text" src="../assets/AfriquEat.png" alt="logo afriqueat coloré">
     <p>{{Response}}</p>
       <section class="formulaire" >
-
         <div class="name">
           <label for="name">Nom</label>
-          <input v-model.trim.="users.lastname" type="text" name="name" id="name">
+          <input v-model.trim="users.lastname" type="text" name="name" id="name">
         </div>
 
         <div class="prenom">
@@ -26,7 +25,7 @@
 
        <div class="password">
          <label for="password">Mot de passe</label>
-         <input v-model="users.password" type="password" name="password" id="password">
+         <input v-model.trim="users.password" type="password" name="password" id="password">
        </div>
 
        <!-- <div class="confirm-password">
@@ -153,8 +152,8 @@ export default {
         //   easing: "linear"
         // }
       })
-    console.log(this.$refs.blockRight)
-    console.log(this.$refs.blockLeft)
+    // console.log(this.$refs.blockRight)
+    // console.log(this.$refs.blockLeft)
   }
 }
 </script>

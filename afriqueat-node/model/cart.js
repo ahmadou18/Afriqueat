@@ -4,7 +4,12 @@ function cart() {
     return knex("cart")
 }
 
-
+function All() {
+    // {userId: 3, isAdmin: true)
+    return cart()
+        .join('food', 'cart.id_food', '=', 'food.foodId')
+        .select('food.*')
+}
 
 
 function getby(data) {
@@ -15,8 +20,9 @@ function getby(data) {
         .select('user.*', 'food.*').where(data)
 }
 
+
 function add(data) {
-    return cart().insert(data).returning('foodId')
+    return cart().insert(data).returning('id_food')
 }
 
 
@@ -28,6 +34,7 @@ function del(data) {
 
 
 module.exports = {
+    All,
     getby,
     add,
     del

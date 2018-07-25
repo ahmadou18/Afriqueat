@@ -3,7 +3,7 @@
 
       <router-link v-for="plat of food" :key="plat.foodId" class="link-to" :to="{ name: 'ProductsDetails', params: { id: plat.foodId }}" >
         <div :style="{ 'background-image': 'url(http://localhost:8888/' + plat.foodImage + ')' }" class="food-box">
-         <router-link to="/Cart"><img class="cart" src="../assets/shopping-cart.png" alt="Shopping cart"></router-link>
+         <button @click="addToCart(plat.foodId)" ><img class="cart" src="../assets/shopping-cart.png" alt="Shopping-cart"></button>
           <div class="dishes-name-price"><span>{{plat.foodName}}</span><span>{{plat.foodPrice}}€</span></div>
         </div>
       </router-link>
@@ -13,13 +13,15 @@
 <script>
 import anime from 'animejs'
 import axios from 'axios'
+import Store from '../store'
 
 export default {
   name: 'products',
   data() {
     return {
       food: [],
-      errors: []
+      errors: [],
+      cart: {}
     }
   },
 
@@ -39,11 +41,28 @@ export default {
         //   easing: 'linear'
         // }
       })
+    },
+
+    addToCart(foodId) {
+      axios
+        .post(`http://localhost:8888/command/${foodId}`, {
+          credentials: true
+        })
+
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.cart = response.data.success
+          console.log('addToCart:', response)
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
     }
   },
 
   mounted() {
     this.fade()
+    console.log('connected:', Store.isConnected)
   },
 
   created() {
@@ -57,7 +76,7 @@ export default {
       .catch(e => {
         this.errors.push(e)
       })
-      .then(res => console.log(this.food))
+    // .then(res => console.log(this.food))
   },
   beforeDestroy() {
     anime({
@@ -91,6 +110,7 @@ export default {
 }
 
 .food-box {
+  position: relative;
   height: 330px;
   background-image: url('https://dummyimage.com/200x200/edbe68');
   background-size: cover;
@@ -205,15 +225,21 @@ export default {
     width: 100%;
   }
 }
-.food-box img {
-  position: relative;
+
+button {
+  position: absolute;
+  z-index: 2;
+  background-color: transparent;
+  border: none;
   top: 10px;
   left: 10px;
-  transform: translateX(-150%);
+  transform: translateX(-206%);
   transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  outline: none;
 }
 
-.food-box:hover img {
+.food-box:hover button {
   transform: translateX(0);
 }
 </style>

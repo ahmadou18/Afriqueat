@@ -3,6 +3,8 @@ const cors = require('cors')
 
 const usersController = require('./controller/users')
 const foodController = require('./controller/food')
+const cartController = require('./controller/cart')
+
 const keys = require('./config/keys')
 // const OAuthController = require('./controller/OAuth')
 // const passportSetup = require('./config/passport-config')
@@ -28,6 +30,8 @@ app.use(session({
 // app.use(OAuthController)
 app.use(usersController)
 app.use(foodController)
+app.use(cartController)
+
 
 
 

@@ -66,6 +66,7 @@ app.post('/plats', (req, res) => {
         foodPrice,
         foodImage
     } = req.body;
+    console.log(req.body)
 
 
 

@@ -15,9 +15,10 @@ function All() {
 function getby(data) {
     // {userId: 3, isAdmin: true)
     return cart()
-        .join('user', 'cart.id_user', '=', 'user.userId')
+        .select('users.*', 'food.*')
+        .join('users', 'cart.id_user', '=', 'users.userId')
         .join('food', 'cart.id_food', '=', 'food.foodId')
-        .select('user.*', 'food.*').where(data)
+        .where(data)
 }
 
 

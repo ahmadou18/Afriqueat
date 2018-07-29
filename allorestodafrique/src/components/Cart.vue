@@ -15,7 +15,8 @@ export default {
   name: 'cart',
   data() {
     return {
-      cart: []
+      cart: [],
+      food: []
     }
   },
   created() {

@@ -20,7 +20,7 @@
 
         <div class="foodImage">
           <label for="foodImage">Image</label>
-          <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+          <input type="file" id="file" ref="file" v-on:change="handleFileUpload()" required/> 
         </div>
 
         <button type="submit" value="Envoyer" class="food-submit" @click="addFood()"><span>Envoyer</span></button>

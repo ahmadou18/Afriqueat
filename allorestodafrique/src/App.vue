@@ -9,22 +9,23 @@
 </template>
 
 <script>
-import Header from "./components/Header";
+import Header from './components/Header'
 export default {
-  name: "App",
+  name: 'App',
   data() {
     return {
       leave: false
-    };
+    }
   },
   components: {
     Header: Header
   }
-};
+}
 </script>
 
 <style>
 #app {
   position: relative;
+  overflow-x: hidden;
 }
 </style>

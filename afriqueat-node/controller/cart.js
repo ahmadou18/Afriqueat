@@ -25,14 +25,21 @@ app.post('/command/:foodId', (req, res) => {
 
 app.get('/command', (req, res) => {
     console.log(req.session.user, "command")
-    cart.All()
+
+    cart.getby({
+            "users.userId": req.session.user.userId
+        })
         .then((result) => {
             res.send({
                 success: result,
             })
-        }).catch((err) => res.send({
-            error: 'Une erreur a été commise'
-        }))
+        }).catch((err) => {
+            console.log(err)
+            res.send({
+                error: 'Une erreur a été commise'
+
+            })
+        })
 
 })
 

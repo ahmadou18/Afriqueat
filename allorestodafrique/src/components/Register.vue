@@ -10,22 +10,22 @@
       <section class="formulaire" >
         <div class="name">
           <label for="name">Nom</label>
-          <input v-model.trim="users.lastname" type="text" name="name" id="name">
+          <input v-model.trim="users.lastname" type="text" name="name" id="name" required>
         </div>
 
         <div class="prenom">
           <label for="prenom">Prénom</label>
-          <input v-model.trim="users.firstname" type="text" name="prenom" id="prenom">
+          <input v-model.trim="users.firstname" type="text" name="prenom" id="prenom" required>
         </div>
 
         <div class="email">
           <label  for="email">E-mail</label>
-          <input v-model.trim="users.email" type="email" name="email" id="email">
+          <input v-model.trim="users.email" type="email" name="email" id="email" required>
         </div>
 
        <div class="password">
          <label for="password">Mot de passe</label>
-         <input v-model.trim="users.password" type="password" name="password" id="password">
+         <input v-model.trim="users.password" type="password" name="password" id="password" required>
        </div>
 
        <!-- <div class="confirm-password">

@@ -8,7 +8,7 @@
         <h1 class="foodTitle">{{food.foodName}}</h1>
         <p class="descrtiption">{{food.foodDescription}}</p>
         <p class="price">Prix: {{food.foodPrice}}€</p>
-        <router-link to="/Cart" class="go-to-cart" tag="button"> <span>Ajouter au panier</span> </router-link>
+        <button @click="addToCart(food.foodId)" to="/Cart" class="go-to-cart" tag="button"> <span>Ajouter au panier</span> </button>
       </div>
     </section>
   </section>
@@ -58,13 +58,29 @@ export default {
         //   easing: "linear"
         // }
       })
+    },
+
+    addToCart(foodId) {
+      axios
+        .post(`http://localhost:8888/command/${foodId}`, {
+          credentials: true
+        })
+
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.cart = response.data.success
+          console.log('addToCart:', response)
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
     }
   },
 
   created() {
     console.log(this.id)
     axios
-      .get(`http://localhost:8888/plats/${this.id}`)
+      .get(`http://localhost:8888/plats/${this.id}`, { credentials: true })
 
       .then(response => {
         // JSON responses are automatically parsed.

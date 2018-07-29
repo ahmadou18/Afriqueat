@@ -10,12 +10,12 @@
           <div class="login-form">
           <div class="email">
             <label for="email">E-mail</label>
-            <input  v-model.trim="users.email" type="email" name="email" id="email">
+            <input  v-model.trim="users.email" type="email" name="email" id="email" required>
           </div>
 
           <div class="password">
             <label for="password">Mot de passe</label>
-            <input v-model.trim="users.password" type="password" name="password" id="password">
+            <input v-model.trim="users.password" type="password" name="password" id="password" required>
           </div>
           <button type="submit" class="login-submit" @click="connexion()"> Se Connecter</button>
         </div>

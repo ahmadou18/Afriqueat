@@ -157,6 +157,9 @@ export default {
 }
 
 .dishes-name-price {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
   background-color: white;
   height: 20%;
   display: flex;

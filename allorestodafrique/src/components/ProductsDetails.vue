@@ -210,14 +210,16 @@ export default {
 }
 
 .go-to-cart:before {
-  content: url('../assets/shopping-cart-white.png') 'Ajouter au panier';
-  object-position: left;
+  content: '';
+  background-image: url('../assets/shopping-cart-white.png');
+  background-size: 25px;
+  background-repeat: no-repeat;
   position: absolute;
   transform: translateY(100%);
   height: 100%;
   width: 100%;
-  top: 0;
-  left: 0;
+  top: 20%;
+  left: 45%;
   transition: all 0.3s ease 0.1s;
   color: white;
   line-height: 35px;
